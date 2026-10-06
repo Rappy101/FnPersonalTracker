@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/osirion/(.*)",
+      "destination": "/api/osirion-catchall?path=$1"
+    }
+  ]
+}
