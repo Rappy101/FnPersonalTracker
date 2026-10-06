@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1f4fd8">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Fortnite Personal Tracker</title>
+  <meta name="description" content="Look up Fortnite stats by Epic name (no API key), browse today's shop, cosmetics, leaks, and news.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%23f4efe4' width='32' height='32' rx='4'/%3E%3Ccircle fill='%2312151c' cx='0' cy='8' r='3'/%3E%3Ccircle fill='%2312151c' cx='0' cy='16' r='3'/%3E%3Ccircle fill='%2312151c' cx='0' cy='24' r='3'/%3E%3C/svg%3E">
+</head>
+<body>
+  <a class="skip" href="#account">Skip to account</a>
+  <div class="wrap">
+    <header class="top">
+      <a class="brand" href="#account">
+        <span class="eyebrow">Fortnite</span>
+        <strong>Personal Tracker</strong>
+      </a>
+      <nav aria-label="Page">
+        <a href="#account">Account</a>
+        <a href="#shop">Shop</a>
+        <a href="#cosmetics">Cosmetics</a>
+        <a href="#leaks">Leaks</a>
+        <a href="#news">News</a>
+      </nav>
+      <p class="reset" id="reset-clock" title="Item shop resets at 00:00 UTC">Shop resets at 00:00 UTC</p>
+    </header>
+
+    <main>
+      <section class="block" id="account">
+        <div class="block-head">
+          <h2>Account</h2>
+        </div>
+        <article class="ticket" id="ticket" aria-live="polite"></article>
+      </section>
+
+      <section class="block" id="shop">
+        <div class="block-head">
+          <h2>Today's shop</h2>
+          <p id="shop-meta">Loading shop…</p>
+        </div>
+        <div class="tools">
+          <div class="chips" id="shop-chips" role="group" aria-label="Shop filters"></div>
+          <input id="shop-search" type="search" placeholder="Filter by name" aria-label="Filter shop by name" enterkeyhint="search">
+        </div>
+        <p class="status" id="shop-empty" hidden>Nothing matches that filter.</p>
+        <div id="shop-root"></div>
+      </section>
+
+      <section class="block" id="cosmetics">
+        <div class="block-head">
+          <h2>Cosmetics</h2>
+          <p>Full Battle Royale catalog, newest first. Open any item for the same preview and shop history as the item shop.</p>
+          <p id="cos-meta"></p>
+        </div>
+        <div class="tools">
+          <div class="chips" id="cos-chips" role="group" aria-label="Cosmetic type filters"></div>
+          <input id="cos-search" type="search" placeholder="Search by name" aria-label="Search cosmetics by name" enterkeyhint="search">
+        </div>
+        <p class="status" id="cos-empty" hidden>Narrow your search or pick a type.</p>
+        <div class="grid" id="cos-root"><p class="status">Scroll here or open this tab to load the catalog.</p></div>
+      </section>
+
+      <section class="block" id="leaks">
+        <div class="block-head">
+          <h2>In the files</h2>
+          <p>Newest cosmetics in the game files. Missing from today's shop means still unreleased.</p>
+          <p class="file-date" id="leak-meta"></p>
+        </div>
+        <div class="tools">
+          <div class="chips" id="leak-chips" role="group" aria-label="Leak filters">
+            <button type="button" class="chip chip-hot" data-mode="out" aria-pressed="true">Not in shop <span id="leak-out-count"></span></button>
+            <button type="button" class="chip" data-mode="all" aria-pressed="false">All new <span id="leak-all-count"></span></button>
+          </div>
+          <input id="leak-search" type="search" placeholder="Filter by name" aria-label="Filter leaks by name" enterkeyhint="search">
+        </div>
+        <p class="status" id="leak-empty" hidden>Nothing matches that filter.</p>
+        <div class="grid" id="leak-root"></div>
+      </section>
+
+      <section class="block" id="news">
+        <div class="block-head">
+          <h2>Island news</h2>
+          <p>Battle Royale, Save the World, and Creative posts.</p>
+        </div>
+        <div id="news-root"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Shop and cosmetics use <a href="https://fortnite-api.com/">Fortnite-API</a>. Player stats use the <a href="https://fnapi.osirion.gg/">Osirion public API</a> via <code>/api/osirion</code> on Vercel (or <code>node server.mjs</code> locally).</p>
+      <p>Not endorsed by Epic Games.</p>
+    </footer>
+  </div>
+
+  <dialog class="viewer" id="viewer" aria-labelledby="viewer-name">
+    <button class="viewer-close" id="viewer-close" type="button" aria-label="Close">&times;</button>
+    <div class="viewer-body">
+      <div class="viewer-media">
+        <div class="viewer-stage" id="viewer-stage"></div>
+        <div class="viewer-tabs" id="viewer-tabs" role="group" aria-label="Preview"></div>
+        <div class="viewer-styles" id="viewer-styles"></div>
+      </div>
+      <div class="viewer-info" id="viewer-info"></div>
+    </div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
