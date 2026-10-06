@@ -165,7 +165,7 @@ function explain(err) {
 
 function explainStats(err) {
   if (err.cors || location.protocol === "file:") {
-    return "Stats need http(s). Deploy to Vercel (recommended) or run node server.mjs, then open the site from that URL — not as a file:// link.";
+    return "Stats didn't load. Open this tracker from its website link, not as a saved file on your computer.";
   }
   if (err.code === "NOT_FOUND") return "No Epic account with that display name.";
   if (err.status === 429) return "Too many lookups. Wait a minute and try again.";
@@ -334,7 +334,7 @@ function renderTicket() {
         overall?.kills != null ? `${num(overall.kills)} kills` : "",
         account.savedAt ? `Updated ${dayUTC(account.savedAt)}` : ""
       ].filter(Boolean).join(" · ")
-    : "Epic name only — no API key. Deploy on Vercel or run node server.mjs locally for in-page stats.";
+    : "Enter your Epic display name. Stats stay in this browser.";
 
   const form = `
     <form class="form-grid" id="lookup-form">
@@ -346,7 +346,6 @@ function renderTicket() {
           ${Object.entries(WINDOWS).map(([value, label]) => `<option value="${value}" ${draft.timeWindow === value ? "selected" : ""}>${label}</option>`).join("")}
         </select>
       </label>
-      <p class="hint">On Vercel, <code>/api/osirion</code> proxies stats. Locally: <code>node server.mjs</code> or <code>npx vercel dev</code>.</p>
       <div class="actions">
         <button class="btn btn-primary" type="submit">Look up and save</button>
         ${account ? `<button class="btn btn-ghost" id="cancel-form" type="button">Back</button>` : ""}
